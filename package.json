@@ -1,0 +1,21 @@
+{
+  "name": "urlshortener",
+  "version": "1.0.0",
+  "description": "application for url shortening",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "daksh K",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.4",
+    "nodemon": "^3.1.0",
+    "short-unique-id": "^5.2.0",
+    "shortid": "^2.2.16"
+  }
+}
