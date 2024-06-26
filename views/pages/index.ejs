@@ -1,13 +1,14 @@
 <html lang="en">
 <head>
   <%- include("../partials/head.ejs"); %>
+  <!-- Include Bootstrap CSS in the head -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container">
   <header>
     <%- include("../partials/header.ejs"); %>
   </header>
   <main>
-    <!-- Render a list of all the URLs -->
     <div class="jumbotron">
       <% if (locals.new_id) { %>
        <div class="alert alert-success" role="alert">
@@ -23,37 +24,39 @@
       </form>
       <% if (locals.urls) { %>
         <h3>Generated URLs</h3>
-        <table class="table table-striped table-bordered">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Short ID</th>
-              <th scope="col">Redirect URL</th>
-              <th scope="col">Short URL</th>
-              <th scope="col">#Clicks</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% urls.forEach((url, index) => { %>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
               <tr>
-                <th scope="row"><%= index + 1 %></th>
-                <td><a href="/url/<%= url.shortId %>" target="_blank" class="text-primary font-weight-bold"><%= url.shortId %></a></td>
-                <td><a href="<%= url.redirectURL %>" target="_blank" class="text-secondary"><%= url.redirectURL %></a></td>
-                <td><a href="/url/<%= url.shortId %>" target="_blank" class="text-secondary">http://localhost:3000/url/<%= url.shortId %></a></td>
-                <td><%= url.visitHistory.length %></td>
-                <td>
-                  <button class="btn btn-secondary btn-sm ml-2" id="copy-btn" data-url="http://localhost:3000/url/<%= url.shortId %>">
-                    <i class="fas fa-copy"></i>
-                  </button>
-                  <button class="btn btn-danger btn-sm" id="delete-btn" data-short-id="<%= url.shortId %>">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
+                <th scope="col">#</th>
+                <th scope="col">Short ID</th>
+                <th scope="col">Redirect URL</th>
+                <th scope="col">Short URL</th>
+                <th scope="col">#Clicks</th>
+                <th scope="col">Actions</th>
               </tr>
-            <% }); %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% urls.forEach((url, index) => { %>
+                <tr>
+                  <th scope="row"><%= index + 1 %></th>
+                  <td><a href="/url/<%= url.shortId %>" target="_blank" class="text-primary font-weight-bold"><%= url.shortId %></a></td>
+                  <td><a href="<%= url.redirectURL %>" target="_blank" class="text-secondary"><%= url.redirectURL %></a></td>
+                  <td><a href="/url/<%= url.shortId %>" target="_blank" class="text-secondary">http://localhost:3000/url/<%= url.shortId %></a></td>
+                  <td><%= url.visitHistory.length %></td>
+                  <td class="d-flex flex-start">
+                    <button class="btn btn-secondary btn-sm ml-2" id="copy-btn" data-url="http://localhost:3000/url/<%= url.shortId %>">
+                      <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm ml-2" id="delete-btn" data-short-id="<%= url.shortId %>">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
       <% } %>
     </div>
   </main>
@@ -96,7 +99,7 @@
             console.log("Delete Operation Denied");
           }
         })
-      })
+      });
 
       copyBtns.forEach(button => {
         button.addEventListener("click", function() {
@@ -111,7 +114,7 @@
             });
         })
       });      
-    })
+    });
   </script>
 </body>
 </html>
