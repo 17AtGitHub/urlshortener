@@ -42,7 +42,11 @@
                 <td><a href="<%= url.redirectURL %>" target="_blank" class="text-secondary"><%= url.redirectURL %></a></td>
                 <td><a href="/url/<%= url.shortId %>" target="_blank" class="text-secondary">http://localhost:3000/url/<%= url.shortId %></a></td>
                 <td><%= url.visitHistory.length %></td>
-                
+                <td>
+                  <button class="btn btn-secondary btn-sm ml-2" id="copy-btn" data-url="http://localhost:3000/url/<%= url.shortId %>">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </td>
               </tr>
             <% }); %>
           </tbody>
@@ -57,5 +61,38 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      const deleteBtns = document.querySelectorAll('#delete-btn');
+      deleteBtns.forEach(button => {
+        button.addEventListener("click", function() {
+          console.log('Button clicked:', this); 
+          const shortId = button.getAttribute("data-short-id");
+          console.log("shortid retrieved from del button click: ", shortId);
+          if(confirm("Are you sure you want to delete the URL?")){
+            fetch(`url/${shortId}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              }
+            })
+            .then((res) => {
+              if(res.ok){
+                console.log("URL Deleted Successfully");
+                window.location.reload();
+              }else{
+                console.log("Server Error in URL delete operation");
+              }
+            })
+            .catch((err) => {
+              console.error("Error in fetch: ", err);
+            })
+          } else{
+            console.log("Delete Operation Denied");
+          }
+        })
+      })
+    })
+  </script>
 </body>
 </html>
