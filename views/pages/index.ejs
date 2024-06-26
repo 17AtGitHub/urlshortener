@@ -46,6 +46,9 @@
                   <button class="btn btn-secondary btn-sm ml-2" id="copy-btn" data-url="http://localhost:3000/url/<%= url.shortId %>">
                     <i class="fas fa-copy"></i>
                   </button>
+                  <button class="btn btn-danger btn-sm" id="delete-btn" data-short-id="<%= url.shortId %>">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
                 </td>
               </tr>
             <% }); %>
@@ -64,6 +67,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", function(){
       const deleteBtns = document.querySelectorAll('#delete-btn');
+      const copyBtns = document.querySelectorAll('#copy-btn');
+      
       deleteBtns.forEach(button => {
         button.addEventListener("click", function() {
           console.log('Button clicked:', this); 
@@ -92,6 +97,20 @@
           }
         })
       })
+
+      copyBtns.forEach(button => {
+        button.addEventListener("click", function() {
+          console.log("COPY BUTTON CLICKED!");
+          const copyURL = button.getAttribute("data-url"); // Corrected line
+          navigator.clipboard.writeText(copyURL)
+          .then(() => {
+              alert('URL copied to clipboard: ' + copyURL);
+            })
+          .catch((err) => {
+              console.error("Error in writing to clipboard:", err);
+            });
+        })
+      });      
     })
   </script>
 </body>

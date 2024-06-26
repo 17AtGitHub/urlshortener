@@ -24,7 +24,7 @@ function startServer(){
     // log the req in logs file
     app.use(logReqRes("logs.txt"));
     
-    // set the view engine as ejs
+    // setting the view engine as ejs
     app.set("view engine", "ejs");
     app.set("views", path.resolve("./views"));
 
